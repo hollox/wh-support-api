@@ -1,0 +1,13 @@
+FROM node:12-alpine AS build
+WORKDIR /wh-tickets-api
+COPY package.json package-lock.json tsconfig.json ./
+RUN ["npm", "install"]
+COPY ./src ./src
+RUN ["npm", "run", "build"]
+
+FROM node:12-alpine
+WORKDIR /wh-tickets-api
+COPY package.json package-lock.json ./
+RUN ["npm", "install", "--only=production"]
+COPY --from=build /wh-tickets-api/dist ./dist
+CMD ["node", "./dist/server.js"]

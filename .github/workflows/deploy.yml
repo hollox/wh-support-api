@@ -1,0 +1,29 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_APP_NAME: "wh-tickers-api-dev"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: login
+        uses: actions/heroku@master
+        with:
+          args: container:login
+      - name: push
+        uses: actions/heroku@master
+        with:
+          args: container:push web -a $HEROKU_APP_NAME
+      - name: release
+        uses: actions/heroku@master
+        with:
+          args: container:release web -a $HEROKU_APP_NAME
