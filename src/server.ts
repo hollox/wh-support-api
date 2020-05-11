@@ -1,6 +1,9 @@
 import { app } from "./app";
 import { logger } from "./utils/logger";
+import { getConfiguration } from "./configuration/configuration.service";
 
-const port = process.env.PORT;
+const configuration = getConfiguration();
 
-app.listen(port, () => logger.info(`launched on ${port}`));
+app.listen(configuration.port, () =>
+  logger.info(`launched on ${configuration.port}`)
+);

@@ -6,11 +6,10 @@
         "rootDir": "src",
         "outDir": "dist",
         "sourceMap": true,
-        "target": "es2019",
-        "resolveJsonModule": true,
+        "target": "esnext",
         "strict": true,
         "noUnusedParameters": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
     },
     "exclude": ["node_modules", "dist", "dump", ".github", ".vscode", ".idea", "coverage", "test"]
 }
