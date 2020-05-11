@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "rootDir": "src",
+        "outDir": "dist",
+        "sourceMap": true,
+        "target": "es2019",
+        "resolveJsonModule": true,
+        "strict": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true
+    },
+    "exclude": ["node_modules", "dist", "dump", ".github", ".vscode", ".idea", "coverage", "test"]
+}
