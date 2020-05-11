@@ -1,7 +1,11 @@
 FROM node:12-alpine AS build
 WORKDIR /wh-tickets-api
-COPY package.json package-lock.json tsconfig.json ./
+
+COPY package.json ./
+COPY package-lock.json ./
+COPY tsconfig.json ./
 RUN ["npm", "install"]
+
 COPY ./src ./src
 RUN ["npm", "run", "build"]
 

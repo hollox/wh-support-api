@@ -53,7 +53,7 @@
   "scripts": {
     "build": "tsc -d",
     "deploy:dev": "./deploy.sh wh-tickets-api-dev",
-    "deploy:production": "./deploy.sh wh-tickets-api-prod",
+    "deploy:prod": "./deploy.sh wh-tickets-api-prod",
     "deploy:staging": "./deploy.sh wh-tickets-api-staging",
     "docker:build": "docker build -f ./Dockerfile.web -t wh-tickets-api .",
     "docker:run": "docker run -p 4300:4300 -e PORT=4300 -d wh-tickets-api",
