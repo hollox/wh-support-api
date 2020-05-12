@@ -9,11 +9,11 @@ export function getTickets(_req: Request, res: Response) {
   const tickets = [
     {
       ticketId: 1,
-      description: "life is good!!"
+      description: "life is good!"
     },
     {
       ticketId: 2,
-      description: "life is awesome!!"
+      description: "life is awesome!"
     }
   ];
   return res.status(constants.HTTP_STATUS_OK).json(tickets);
