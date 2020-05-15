@@ -8,11 +8,11 @@ export function createTicket(_req: Request, res: Response) {
 export function getTickets(_req: Request, res: Response) {
   const tickets = [
     {
-      ticketId: 1,
+      ticket_id: 1,
       description: "life is good!"
     },
     {
-      ticketId: 2,
+      ticket_id: 2,
       description: "life is awesome!"
     }
   ];
