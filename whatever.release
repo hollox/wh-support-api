@@ -1,4 +1,4 @@
-#
+date#
 # FROM node:12-alpine
 # WORKDIR /wh-tickets-api
 #
