@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "url": {
+      "ENV": "DATABASE_URL"
+    },
+    "addIfNotExists": {
+      "ssl": true
+    }
+  },
+  "local": {
+    "url": {
+      "ENV": "DATABASE_URL"
+    }
+  }
+}

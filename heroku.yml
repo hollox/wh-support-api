@@ -1,3 +1,4 @@
 build:
   docker:
+    release: Dockerfile.release
     web: Dockerfile.web
