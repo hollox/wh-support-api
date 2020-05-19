@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { constants } from "http2";
 
-export function createTicket(_req: Request, res: Response) {
+export async function createTicket(
+  _req: Request,
+  res: Response
+): Promise<void> {
   return res.status(constants.HTTP_STATUS_CREATED).end();
 }
 
-export function getTickets(_req: Request, res: Response) {
+export async function getTickets(_req: Request, res: Response): Promise<void> {
   const tickets = [
     {
       ticket_id: 1,
@@ -16,5 +19,5 @@ export function getTickets(_req: Request, res: Response) {
       description: "life is awesome!"
     }
   ];
-  return res.status(constants.HTTP_STATUS_OK).json(tickets);
+  res.status(constants.HTTP_STATUS_OK).json(tickets);
 }
