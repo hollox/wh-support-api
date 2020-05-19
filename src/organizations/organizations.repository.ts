@@ -37,22 +37,44 @@ export async function saveOrganization(
     ? updateOrganization
     : insertOrganization;
   const query = getQuery(organization);
-  await executeQuery(query);
-  return {} as any;
+  const { rows } = await executeQuery<OrganizationRecord>(query);
+  return convertRowToModel(rows[0]);
 }
 
 function insertOrganization(organization: Organization): QueryConfig {
   return {
-    text:
-      "INSERT INTO organizations (name, creation_user_id, creation_date, modification_user_id, modification_date) VALUES ($1, $2, now(), $2, now()) RETURNING *",
+    text: `
+INSERT INTO organizations
+(
+  name,
+  creation_user_id,
+  creation_date,
+  modification_user_id,
+  modification_date
+) VALUES (
+  $1,
+  $2,
+  now(),
+  $2,
+  now())
+RETURNING
+  organization_id,
+  name`,
     values: [organization.name, SYSTEM_UUID]
   };
 }
 
 function updateOrganization(organization: Organization): QueryConfig {
   return {
-    text:
-      "UPDATE organizations SET name = $2, modification_user_id = $3, modification_date = now() WHERE organization_id = $1 RETURNING *",
+    text: `
+UPDATE organizations SET
+  name = $2,
+  modification_user_id = $3,
+  modification_date = now()
+WHERE organization_id = $1
+RETURNING
+  organization_id,
+  name`,
     values: [organization.organizationId, organization.name, SYSTEM_UUID]
   };
 }
