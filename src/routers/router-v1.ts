@@ -7,6 +7,7 @@ import {
   getOrganizationById
 } from "../organizations/organizations.controller";
 import { handleErrors } from "../utils/errors";
+import { getByOrganizationId, saveUser } from "../users/users.controller";
 
 export const routerV1 = Router();
 
@@ -21,3 +22,9 @@ routerV1.post("/organizations", handleErrors(saveOrganization));
 
 routerV1.get("/tickets", handleErrors(getTickets));
 routerV1.post("/tickets", handleErrors(createTicket));
+
+routerV1.get(
+  "/organizations/:organization_id/users",
+  handleErrors(getByOrganizationId)
+);
+routerV1.post("/users", handleErrors(saveUser));
