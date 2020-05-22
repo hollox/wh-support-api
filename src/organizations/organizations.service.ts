@@ -1,18 +1,16 @@
 import { Organization } from "./organizations.models";
 import * as repository from "./organizations.repository";
 
-export async function getOrganizations(): Promise<Organization[]> {
+export async function getAll(): Promise<Organization[]> {
   return repository.getOrganizations();
 }
 
-export async function getOrganizationById(
+export async function getById(
   organizationId: string
 ): Promise<Organization | null> {
   return repository.getOrganizationById(organizationId);
 }
 
-export async function saveOrganization(
-  organization: Organization
-): Promise<Organization> {
+export async function save(organization: Organization): Promise<Organization> {
   return repository.saveOrganization(organization);
 }

@@ -3,6 +3,7 @@ import {
   OrganizationJson,
   OrganizationRecord
 } from "./organizations.models";
+import * as usersHelper from "../users/users.helper";
 
 export function convertJsonToModel(
   organizationJson: OrganizationJson
@@ -24,7 +25,10 @@ export function convertModelToJson(
 ): OrganizationJson {
   return {
     organization_id: organization.organizationId,
-    name: organization.name
+    name: organization.name,
+    users:
+      organization.users &&
+      organization.users.map(usersHelper.convertModelToJson)
   };
 }
 

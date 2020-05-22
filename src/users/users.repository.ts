@@ -5,11 +5,21 @@ import { convertRowToModel } from "./users.helper";
 import { QueryConfig } from "pg";
 import { SYSTEM_UUID } from "../configuration/configuration.service";
 
-export async function getByOrganizationId(userId: string): Promise<User[]> {
+export async function getByOrganizationId(
+  organizationId: string
+): Promise<User[]> {
   const query = {
     text: `
-SELECT user_id, firstname, lastname FROM users WHERE user_id = $1`,
-    values: [userId]
+SELECT
+    users.user_id,
+    users.email,
+    users.firstname,
+    users.lastname
+FROM users
+LEFT JOIN user_organizations
+ON users.user_id = user_organizations.user_id
+WHERE user_organizations.organization_id = $1`,
+    values: [organizationId]
   };
 
   const { rows } = await executeQuery<UserRecord>(query);
@@ -28,7 +38,10 @@ function insert(user: User): QueryConfig {
     text: `
 INSERT INTO users
 (
-  name,
+  email,
+  firstname,
+  lastname,
+  
   creation_user_id,
   creation_date,
   modification_user_id,
@@ -36,13 +49,18 @@ INSERT INTO users
 ) VALUES (
   $1,
   $2,
+  $3,
+  
+  $4,
   now(),
-  $2,
+  $4,
   now())
 RETURNING
-  organization_id,
-  name`,
-    values: [user.firstname, SYSTEM_UUID]
+  user_id,
+  email,
+  firstname,
+  lastname`,
+    values: [user.email, user.firstname, user.lastname, SYSTEM_UUID]
   };
 }
 
@@ -50,13 +68,24 @@ function update(user: User): QueryConfig {
   return {
     text: `
 UPDATE users SET
-  name = $2,
-  modification_user_id = $3,
+  email = $2,
+  firstname = $3,
+  lastname = $4,
+  
+  modification_user_id = $5,
   modification_date = now()
-WHERE organization_id = $1
+WHERE user_id = $1
 RETURNING
-  organization_id,
-  name`,
-    values: [user.firstname, SYSTEM_UUID]
+  user_id,
+  email,
+  firstname,
+  lastname`,
+    values: [
+      user.userId,
+      user.email,
+      user.firstname,
+      user.lastname,
+      SYSTEM_UUID
+    ]
   };
 }

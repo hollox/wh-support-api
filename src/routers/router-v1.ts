@@ -1,30 +1,21 @@
 import { Router } from "express";
-import { createTicket, getTickets } from "../tickets/tickets.controller";
+import * as ticketsController from "../tickets/tickets.controller";
 import { checkJwt } from "../jwt/jwt.middleware";
-import {
-  saveOrganization,
-  getOrganizations,
-  getOrganizationById
-} from "../organizations/organizations.controller";
+import * as organizationsController from "../organizations/organizations.controller";
 import { handleErrors } from "../utils/errors";
-import { getByOrganizationId, saveUser } from "../users/users.controller";
-
+import * as usersController from "../users/users.controller";
 export const routerV1 = Router();
 
 routerV1.use(checkJwt);
 
-routerV1.get("/organizations", handleErrors(getOrganizations));
+routerV1.get("/organizations", handleErrors(organizationsController.getAll));
 routerV1.get(
   "/organizations/:organization_id",
-  handleErrors(getOrganizationById)
+  handleErrors(organizationsController.getById)
 );
-routerV1.post("/organizations", handleErrors(saveOrganization));
+routerV1.post("/organizations", handleErrors(organizationsController.save));
 
-routerV1.get("/tickets", handleErrors(getTickets));
-routerV1.post("/tickets", handleErrors(createTicket));
+routerV1.get("/tickets", handleErrors(ticketsController.getTickets));
+routerV1.post("/tickets", handleErrors(ticketsController.createTicket));
 
-routerV1.get(
-  "/organizations/:organization_id/users",
-  handleErrors(getByOrganizationId)
-);
-routerV1.post("/users", handleErrors(saveUser));
+routerV1.post("/users", handleErrors(usersController.save));

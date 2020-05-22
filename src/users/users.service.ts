@@ -1,12 +1,12 @@
 import { User } from "./users.models";
-import * as repository from "./users.repository";
+import * as usersRepository from "./users.repository";
 
-export async function getUsersByOrganizationId(
+export async function getByOrganizationId(
   organizationId: string
 ): Promise<User[]> {
-  return repository.getByOrganizationId(organizationId);
+  return usersRepository.getByOrganizationId(organizationId);
 }
 
-export async function saveUser(user: User): Promise<User> {
-  return repository.save(user);
+export async function save(user: User): Promise<User> {
+  return usersRepository.save(user);
 }

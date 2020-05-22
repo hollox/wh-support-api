@@ -307,13 +307,6 @@ BEGIN
     VALUES
     (
         worldhoster_organization_id,
-        system_user_id,
-
-        now(),
-        system_user_id
-    ),
-    (
-        worldhoster_organization_id,
         employee1_user_id,
 
         now(),
