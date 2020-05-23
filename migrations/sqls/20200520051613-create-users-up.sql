@@ -74,6 +74,27 @@ CREATE TABLE user_organizations (
     creation_user_id uuid NOT NULL
 );
 
+CREATE TABLE authenticators (
+    authenticator_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT authenticators_pkey PRIMARY KEY,
+    name VARCHAR(250) NOT NULL,
+
+    creation_date timestamp with time zone DEFAULT now() NOT NULL,
+    creation_user_id uuid NOT NULL,
+    modification_date timestamp with time zone DEFAULT now() NOT NULL,
+    modification_user_id uuid NOT NULL
+);
+
+CREATE TABLE user_authentications (
+    row_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT user_authentications_pkey PRIMARY KEY,
+
+    user_id uuid NOT NULL REFERENCES users(user_id),
+    authentication_id VARCHAR(250),
+    authenticator_id uuid NOT NULL REFERENCES authenticators(authenticator_id),
+
+    creation_date timestamp with time zone DEFAULT now() NOT NULL,
+    creation_user_id uuid NOT NULL
+);
+
 DO $$
 DECLARE
     worldhoster_organization_id uuid := 'c1f4c5fb-eac3-45cf-ba2b-c975203d44db';
@@ -89,6 +110,8 @@ DECLARE
     customer_group_id uuid := '13060fe3-2e8d-47d1-afe7-67491b00da05';
     employee_group_id uuid := '0a4baa9d-a603-4f8f-b71d-936a0f7ffd6f';
     manager_group_id uuid  := 'f6421726-9d98-4005-83c6-b16651c83803';
+
+    auth0_authenticator_id uuid := '347b0d59-0eef-41a3-9fb6-a275c105ae0a';
 BEGIN
     -- --------------------------------------------------------
     -- O R G A N I Z A T I O N S
@@ -369,6 +392,74 @@ BEGIN
     (
         manager_group_id,
         manager1_user_id,
+
+        now(),
+        system_user_id
+    );
+
+    -- --------------------------------------------------------
+    -- A U T H E N T I C A T O R S
+    --
+    INSERT INTO authenticators (
+        authenticator_id,
+        name,
+
+        creation_date,
+        creation_user_id,
+        modification_date,
+        modification_user_id
+    )
+    VALUES
+    (
+        auth0_authenticator_id,
+        'auth0',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    );
+
+    -- --------------------------------------------------------
+    -- U S E R   A U T H E N T I C A T I O N S
+    --
+    INSERT INTO user_authentications (
+        user_id,
+        authentication_id,
+        authenticator_id,
+
+        creation_date,
+        creation_user_id
+    )
+    VALUES
+    (
+        customer1_user_id,
+        'auth0|5ebb3139dc1d2b0c033355fe',
+        auth0_authenticator_id,
+
+        now(),
+        system_user_id
+    ),
+    (
+        customer2_user_id,
+        'auth0|5ebe419ca361c20c74a951fa',
+        auth0_authenticator_id,
+
+        now(),
+        system_user_id
+    ),
+    (
+        employee1_user_id,
+        'auth0|5ebb314f62bd5e0c701ac502',
+        auth0_authenticator_id,
+
+        now(),
+        system_user_id
+    ),
+    (
+        manager1_user_id,
+        'auth0|5ebb3165dc1d2b0c033356bf',
+        auth0_authenticator_id,
 
         now(),
         system_user_id

@@ -10,3 +10,9 @@ export async function getByOrganizationId(
 export async function save(user: User): Promise<User> {
   return usersRepository.save(user);
 }
+
+export async function getByAuthenticationId(
+  authenticationId: string
+): Promise<User | null> {
+  return usersRepository.getByAuthenticationId(authenticationId);
+}

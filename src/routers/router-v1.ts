@@ -1,12 +1,13 @@
 import { Router } from "express";
 import * as ticketsController from "../tickets/tickets.controller";
-import { checkJwt } from "../jwt/jwt.middleware";
 import * as organizationsController from "../organizations/organizations.controller";
 import { handleErrors } from "../utils/errors";
 import * as usersController from "../users/users.controller";
+import * as authenticationMiddleware from "../authentication/authentication.middleware";
+
 export const routerV1 = Router();
 
-routerV1.use(checkJwt);
+routerV1.use(authenticationMiddleware.authenticate);
 
 routerV1.get("/organizations", handleErrors(organizationsController.getAll));
 routerV1.get(

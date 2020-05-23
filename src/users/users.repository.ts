@@ -26,6 +26,33 @@ WHERE user_organizations.organization_id = $1`,
   return convertRowsToModels(rows);
 }
 
+export async function getByAuthenticationId(
+  authenticationId: string,
+  authenticatorId: string
+): Promise<User | null> {
+  const query = {
+    text: `
+SELECT
+    users.user_id,
+    users.email,
+    users.firstname,
+    users.lastname,
+FROM users
+LEFT JOIN user_authentications
+ON users.user_id = user_authentications.user_id
+AND user_authentications.authenticator_id = $2
+WHERE user_organizations.authentication_id = $1`,
+    values: [authenticationId, authenticatorId]
+  };
+
+  const { rows } = await executeQuery<UserRecord>(query);
+  if (rows.length > 0) {
+    return convertRowToModel(rows[0]);
+  } else {
+    return null;
+  }
+}
+
 export async function save(user: User): Promise<User> {
   const getQuery = user.userId ? update : insert;
   const query = getQuery(user);
