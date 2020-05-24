@@ -33,6 +33,9 @@ export async function authenticateByUserToken(
       token,
       configuration.authentication.infoUrl
     );
+    if (!userInformation) {
+      return null;
+    }
     return usersService.getByAuthenticationId(
       userInformation.userId,
       configuration.authentication.authenticatorId
@@ -72,10 +75,11 @@ async function verifyToken(
     jwt.verify(token, publicKey, {
       algorithms: ["RS256"]
     });
-
+    console.log({ decode: jwt.decode(token) });
     return true;
-  } catch (err) {
-    logger.error(`There was an error while verfying the token: ${err}`);
+  } catch (error) {
+    console.log({ error });
+    logger.error(`There was an error while verfying the token: ${error}`);
     return false;
   }
 }
@@ -97,16 +101,24 @@ function getFirstPublicKey(keys: SigningKey[]): string | null {
 function getUserInformation(
   token: string,
   authenticationInfoUrl: string
-): Promise<UserInformation> {
+): Promise<UserInformation | null> {
+  console.log({ token, authenticationInfoUrl });
   return axios({
     url: authenticationInfoUrl,
     method: "get",
     params: {
       access_token: token
     }
-  }).then(response => {
-    return convertResponseToModel(response.data);
-  });
+  })
+    .then(response => {
+      return convertResponseToModel(response.data);
+    })
+    .catch(error => {
+      logger.error(
+        `There was an error while retrieving user information from the token: ${error}`
+      );
+      return null;
+    });
 }
 
 function convertResponseToModel(
