@@ -12,7 +12,7 @@ export async function authenticate(
       req
     );
     if (authenticatedUser) {
-      req.locals.set("authenticatedUser", authenticatedUser);
+      res.locals.authenticatedUser = authenticatedUser;
       next();
     } else {
       res.status(constants.HTTP_STATUS_UNAUTHORIZED).end();

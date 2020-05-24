@@ -12,7 +12,11 @@ export async function save(user: User): Promise<User> {
 }
 
 export async function getByAuthenticationId(
-  authenticationId: string
+  authenticationId: string,
+  authenticatorId: string
 ): Promise<User | null> {
-  return usersRepository.getByAuthenticationId(authenticationId);
+  return usersRepository.getByAuthenticationId(
+    authenticationId,
+    authenticatorId
+  );
 }

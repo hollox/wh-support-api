@@ -2,23 +2,41 @@ import jwks, { SigningKey } from "jwks-rsa";
 import { promisify } from "util";
 import jwt from "jsonwebtoken";
 import { logger } from "../utils/logger";
-import axios, { AxiosResponse } from "axios";
-import { UserInformation } from "./authentication.models";
+import axios from "axios";
+import {
+  UserInformation,
+  UserInformationResponse
+} from "./authentication.models";
 import { Request } from "express";
 import { User } from "../users/users.models";
 import * as usersService from "../users/users.service";
+import { Configuration } from "../configuration/configuration.model";
 
 export async function authenticateByUserToken(
   req: Request
 ): Promise<User | null> {
   const token = extractTokenFromHeader(req);
-  const authorized = await verifyToken(token);
-
-  if (!authorized) return null;
+  if (!token) {
+    return null;
+  }
+  const configuration = req.app.locals.configuration as Configuration;
+  const authorized = await verifyToken(
+    token,
+    configuration.authentication.publicKeyUrl
+  );
+  if (!authorized) {
+    return null;
+  }
 
   try {
-    const userInformation = await getUserInformation(token);
-    return usersService.getByAuthenticationId(userInformation.sub;
+    const userInformation = await getUserInformation(
+      token,
+      configuration.authentication.infoUrl
+    );
+    return usersService.getByAuthenticationId(
+      userInformation.userId,
+      configuration.authentication.authenticatorId
+    );
   } catch (error) {
     return null;
   }
@@ -38,8 +56,11 @@ function extractTokenFromHeader(req: Request): string | null {
   return words[1];
 }
 
-async function verifyToken(token: string): Promise<boolean> {
-  const client = jwks({ jwksUri: jwksUrl });
+async function verifyToken(
+  token: string,
+  authenticationPublicKeyUrl: string
+): Promise<boolean> {
+  const client = jwks({ jwksUri: authenticationPublicKeyUrl });
   const getSigningKeys = promisify(client.getSigningKeys.bind(client));
   const keys = await getSigningKeys();
 
@@ -74,8 +95,8 @@ function getFirstPublicKey(keys: SigningKey[]): string | null {
 }
 
 function getUserInformation(
-  authenticationInfoUrl: string,
-  token: string
+  token: string,
+  authenticationInfoUrl: string
 ): Promise<UserInformation> {
   return axios({
     url: authenticationInfoUrl,
@@ -83,7 +104,17 @@ function getUserInformation(
     params: {
       access_token: token
     }
-  }).then((response: AxiosResponse<UserInformation>) => {
-    return response.data;
+  }).then(response => {
+    return convertResponseToModel(response.data);
   });
+}
+
+function convertResponseToModel(
+  userInformationResponse: UserInformationResponse
+): UserInformation {
+  return {
+    userId: userInformationResponse.sub,
+    email: userInformationResponse.email,
+    emailVerified: userInformationResponse.email_verified
+  };
 }

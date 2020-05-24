@@ -4,9 +4,7 @@ import * as configurationService from "./configuration/configuration.service";
 
 export const app = express();
 
-const configuration = configurationService.getConfiguration();
-
-app.locals.set("configuration", configuration);
+app.locals.configuration = configurationService.getConfiguration();
 
 app.disable("x-powered-by");
 app.use("/", router);

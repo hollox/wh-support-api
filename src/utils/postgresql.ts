@@ -5,9 +5,9 @@ import { getConfiguration } from "../configuration/configuration.service";
 const configurations = getConfiguration();
 
 export const pool = new Pool({
-  connectionString: configurations.databaseUrl,
-  ssl: configurations.databaseSsl,
-  max: configurations.databaseMaxConnection
+  connectionString: configurations.database.url,
+  ssl: configurations.database.ssl,
+  max: configurations.database.maxConnection
 });
 
 export type QueryExecutor = (q: QueryConfig) => Promise<QueryResult>;

@@ -4,6 +4,6 @@ import { getConfiguration } from "./configuration/configuration.service";
 
 const configuration = getConfiguration();
 
-app.listen(configuration.port, () =>
-  logger.info(`launched on ${configuration.port}`)
+app.listen(configuration.server.port, () =>
+  logger.info(`launched on ${configuration.server.port}`)
 );
