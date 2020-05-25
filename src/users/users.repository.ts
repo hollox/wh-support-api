@@ -36,16 +36,17 @@ SELECT
     users.user_id,
     users.email,
     users.firstname,
-    users.lastname,
+    users.lastname
 FROM users
 LEFT JOIN user_authentications
 ON users.user_id = user_authentications.user_id
 AND user_authentications.authenticator_id = $2
-WHERE user_organizations.authentication_id = $1`,
+WHERE user_authentications.authentication_id = $1`,
     values: [authenticationId, authenticatorId]
   };
 
   const { rows } = await executeQuery<UserRecord>(query);
+
   if (rows.length > 0) {
     return convertRowToModel(rows[0]);
   } else {

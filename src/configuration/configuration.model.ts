@@ -17,6 +17,4 @@ interface DatabaseConfiguration {
 interface AuthenticationConfiguration {
   authenticatorId: string;
   publicKeyUrl: string;
-  infoUrl: string;
-  infoApiKey: string;
 }

@@ -62,7 +62,6 @@ export async function save(req: Request, res: Response): Promise<void> {
     const savedOrganizationJson = organizationsHelper.convertModelToJson(
       savedOrganization
     );
-    console.log({ organization, savedOrganization, savedOrganizationJson });
     res.status(constants.HTTP_STATUS_OK).json(savedOrganizationJson);
   }
 }

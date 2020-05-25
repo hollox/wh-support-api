@@ -9,6 +9,7 @@ export async function createTicket(
 }
 
 export async function getTickets(_req: Request, res: Response): Promise<void> {
+  console.log({ getTickets: res.locals.authenticatedUser });
   const tickets = [
     {
       ticket_id: 1,

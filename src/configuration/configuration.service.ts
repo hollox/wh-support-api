@@ -17,9 +17,7 @@ export function getConfiguration(): Configuration {
     },
     authentication: {
       authenticatorId: process.env.AUTHENTICATION_AUTHENTICATOR_ID as string,
-      publicKeyUrl: process.env.AUTHENTICATION_PUBLIC_KEY_URL as string,
-      infoUrl: process.env.AUTHENTICATION_INFO_URL as string,
-      infoApiKey: process.env.AUTHENTICATION_INFO_API_KEY as string
+      publicKeyUrl: process.env.AUTHENTICATION_PUBLIC_KEY_URL as string
     }
   };
 }
