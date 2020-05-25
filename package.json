@@ -65,7 +65,7 @@
     "deploy:staging": "git push https://git.heroku.com/wh-tickets-api-staging.git master",
     "docker:build": "docker build -f ./Dockerfile.web -t wh-tickets-api .",
     "docker:run": "docker run -p 4300:4300 -e PORT=4300 -d wh-tickets-api",
-    "lint": "eslint './src/**/*.ts'",
+    "lint": "eslint src --ext .ts,.tsx",
     "start": "nodemon ./src/server.ts"
   }
 }

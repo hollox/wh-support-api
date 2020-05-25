@@ -45,6 +45,7 @@ INSERT INTO messages
   now())
 RETURNING
   message_id,
+  ticket_id,
   author_user_id,
   content,
   creation_date`,
@@ -70,6 +71,7 @@ UPDATE messages SET
 WHERE message_id = $1
 RETURNING
   message_id,
+  ticket_id,
   author_user_id,
   content,
   creation_date`,
