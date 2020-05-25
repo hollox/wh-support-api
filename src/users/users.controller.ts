@@ -4,7 +4,14 @@ import { getDetailsFromError } from "../utils/errors";
 import { constants } from "http2";
 import * as usersHelper from "./users.helper";
 import * as usersService from "../users/users.service";
-import { saveUserSchema } from "./users.models";
+import { saveUserSchema, User } from "./users.models";
+
+export async function whoAmI(_req: Request, res: Response): Promise<void> {
+  const user = res.locals.authenticatedUser as User;
+  const userJson = usersHelper.convertModelToJson(user);
+
+  res.status(constants.HTTP_STATUS_OK).json(userJson);
+}
 
 export async function save(req: Request, res: Response): Promise<void> {
   const validationResult = saveUserSchema.validate(req.body, requiredOptions);

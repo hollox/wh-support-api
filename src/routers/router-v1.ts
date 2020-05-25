@@ -19,4 +19,5 @@ routerV1.post("/organizations", handleErrors(organizationsController.save));
 routerV1.get("/tickets", handleErrors(ticketsController.getAll));
 routerV1.post("/tickets", handleErrors(ticketsController.createTicket));
 
+routerV1.post("/users/who-am-i", handleErrors(usersController.whoAmI));
 routerV1.post("/users", handleErrors(usersController.save));
