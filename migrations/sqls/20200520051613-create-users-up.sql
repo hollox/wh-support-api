@@ -44,6 +44,7 @@ CREATE TABLE group_permissions (
 
 CREATE TABLE users (
     user_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT users_pkey PRIMARY KEY,
+    organization_id uuid NOT NULL REFERENCES organizations(organization_id),
     email VARCHAR(250) NOT NULL,
     firstname VARCHAR(250) NULL,
     lastname VARCHAR(250) NULL,
@@ -58,16 +59,6 @@ CREATE TABLE user_groups (
     row_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT user_groups_pkey PRIMARY KEY,
 
     group_id uuid NOT NULL REFERENCES groups(group_id),
-    user_id uuid NOT NULL REFERENCES users(user_id),
-
-    creation_date timestamp with time zone DEFAULT now() NOT NULL,
-    creation_user_id uuid NOT NULL
-);
-
-CREATE TABLE user_organizations (
-    row_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT user_organizations_pkey PRIMARY KEY,
-
-    organization_id uuid NOT NULL REFERENCES organizations(organization_id),
     user_id uuid NOT NULL REFERENCES users(user_id),
 
     creation_date timestamp with time zone DEFAULT now() NOT NULL,
@@ -161,6 +152,7 @@ BEGIN
     INSERT INTO users
     (
     user_id,
+    organization_id,
     email,
     firstname,
     lastname,
@@ -173,6 +165,7 @@ BEGIN
     VALUES
     (
         system_user_id,
+        worldhoster_organization_id,
         'system@worldhoster.live',
         null,
         null,
@@ -184,6 +177,7 @@ BEGIN
     ),
     (
         customer1_user_id,
+        organization1_organization_id,
         'customer1@worldhoster.live',
         null,
         null,
@@ -195,6 +189,7 @@ BEGIN
     ),
     (
         customer2_user_id,
+        organization2_organization_id,
         'customer2@worldhoster.live',
         null,
         null,
@@ -206,6 +201,7 @@ BEGIN
     ),
     (
         employee1_user_id,
+        worldhoster_organization_id,
         'employee1@worldhoster.live',
         null,
         null,
@@ -217,6 +213,7 @@ BEGIN
     ),
     (
         manager1_user_id,
+        worldhoster_organization_id,
         'manager1@worldhoster.live',
         null,
         null,
@@ -316,46 +313,6 @@ BEGIN
         system_user_id
     );
     */
-
-    -- --------------------------------------------------------
-    -- U S E R   O R G A N I Z A T I O N S
-    --
-    INSERT INTO user_organizations (
-        organization_id,
-        user_id,
-
-        creation_date,
-        creation_user_id
-    )
-    VALUES
-    (
-        worldhoster_organization_id,
-        employee1_user_id,
-
-        now(),
-        system_user_id
-    ),
-    (
-        worldhoster_organization_id,
-        manager1_user_id,
-
-        now(),
-        system_user_id
-    ),
-    (
-        organization1_organization_id,
-        customer1_user_id,
-
-        now(),
-        system_user_id
-    ),
-    (
-        organization2_organization_id,
-        customer2_user_id,
-
-        now(),
-        system_user_id
-    );
 
     -- --------------------------------------------------------
     -- G R O U P S

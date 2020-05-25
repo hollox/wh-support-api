@@ -16,9 +16,7 @@ SELECT
     users.firstname,
     users.lastname
 FROM users
-LEFT JOIN user_organizations
-ON users.user_id = user_organizations.user_id
-WHERE user_organizations.organization_id = $1`,
+WHERE organization_id = $1`,
     values: [organizationId]
   };
 
@@ -66,6 +64,7 @@ function insert(user: User): QueryConfig {
     text: `
 INSERT INTO users
 (
+  organization_id,
   email,
   firstname,
   lastname,
@@ -78,17 +77,24 @@ INSERT INTO users
   $1,
   $2,
   $3,
+  $4,
   
-  $4,
+  $5,
   now(),
-  $4,
+  $5,
   now())
 RETURNING
   user_id,
   email,
   firstname,
   lastname`,
-    values: [user.email, user.firstname, user.lastname, SYSTEM_UUID]
+    values: [
+      user.organizationId,
+      user.email,
+      user.firstname,
+      user.lastname,
+      SYSTEM_UUID
+    ]
   };
 }
 
