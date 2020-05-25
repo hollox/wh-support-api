@@ -13,7 +13,7 @@ export interface MessageJson {
   ticket_id: string;
   author_user_id: string;
   content: string;
-  create_date: string;
+  creation_date: string;
 }
 
 export interface MessageRecord {
@@ -21,7 +21,7 @@ export interface MessageRecord {
   ticket_id: string;
   author_user_id: string;
   content: string;
-  create_date: Date;
+  creation_date: Date;
 }
 
 export const saveMessageSchema = Joi.object<MessageJson>({

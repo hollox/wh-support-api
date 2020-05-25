@@ -10,7 +10,7 @@ export function convertJsonToModel(messageJson: MessageJson): Message {
     ticketId: messageJson.ticket_id,
     authorUserId: messageJson.author_user_id,
     content: messageJson.content,
-    creationDate: new Date(messageJson.create_date)
+    creationDate: new Date(messageJson.creation_date)
   };
 }
 
@@ -19,12 +19,13 @@ export function convertModelsToJson(messages: Message[]): MessageJson[] {
 }
 
 export function convertModelToJson(message: Message): MessageJson {
+  console.log({ message });
   return {
     message_id: message.messageId,
     ticket_id: message.ticketId,
     author_user_id: message.authorUserId,
     content: message.content,
-    create_date: message.creationDate.toISOString()
+    creation_date: message.creationDate.toISOString()
   };
 }
 
@@ -38,6 +39,6 @@ export function convertRowToModel(row: MessageRecord): Message {
     ticketId: row.ticket_id,
     authorUserId: row.author_user_id,
     content: row.content,
-    creationDate: row.create_date
+    creationDate: row.creation_date
   };
 }
