@@ -1,4 +1,4 @@
-import { Message, MessageJson } from "./messages.models";
+import { Message, MessageJson, MessageRecord } from "./messages.models";
 
 export function convertJsonToModels(messagesJson: MessageJson[]): Message[] {
   return messagesJson.map(convertJsonToModel);
@@ -7,7 +7,10 @@ export function convertJsonToModels(messagesJson: MessageJson[]): Message[] {
 export function convertJsonToModel(messageJson: MessageJson): Message {
   return {
     messageId: messageJson.message_id,
-    content: messageJson.content
+    ticketId: messageJson.ticket_id,
+    authorUserId: messageJson.author_user_id,
+    content: messageJson.content,
+    creationDate: new Date(messageJson.create_date)
   };
 }
 
@@ -18,22 +21,23 @@ export function convertModelsToJson(messages: Message[]): MessageJson[] {
 export function convertModelToJson(message: Message): MessageJson {
   return {
     message_id: message.messageId,
-    content: message.content
+    ticket_id: message.ticketId,
+    author_user_id: message.authorUserId,
+    content: message.content,
+    create_date: message.creationDate.toISOString()
   };
 }
-/*
-export function convertRowsToModels(rows: UserRecord[]): User[] {
+
+export function convertRowsToModels(rows: MessageRecord[]): Message[] {
   return rows.map(convertRowToModel);
 }
 
-export function convertRowToModel(row: UserRecord): User {
+export function convertRowToModel(row: MessageRecord): Message {
   return {
-    userId: row.user_id,
-    organizationId: row.organization_id,
-    email: row.email,
-    firstname: row.firstname,
-    lastname: row.lastname,
-    permissions: []
+    messageId: row.message_id,
+    ticketId: row.ticket_id,
+    authorUserId: row.author_user_id,
+    content: row.content,
+    creationDate: row.create_date
   };
 }
-*/

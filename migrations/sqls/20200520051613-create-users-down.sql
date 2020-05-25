@@ -1,3 +1,4 @@
+DROP TABLE messages;
 DROP TABLE tickets;
 DROP TABLE group_permissions;
 DROP TABLE user_authentications;

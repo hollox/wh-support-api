@@ -7,7 +7,7 @@ export function convertJsonToModel(ticketJson: TicketJson): Ticket {
     authorUserId: ticketJson.author_user_id,
     title: ticketJson.title,
     content: ticketJson.content,
-    messages: messagesHelper.convertJsonToModels(ticketJson.messages)
+    messages: []
   };
 }
 

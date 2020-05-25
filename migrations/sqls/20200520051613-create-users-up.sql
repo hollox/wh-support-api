@@ -100,6 +100,18 @@ CREATE TABLE tickets (
     modification_user_id uuid NOT NULL
 );
 
+CREATE TABLE messages (
+    message_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT messages_pkey PRIMARY KEY,
+    ticket_id uuid NOT NULL REFERENCES tickets(ticket_id),
+    author_user_id uuid NOT NULL REFERENCES users(user_id),
+    content TEXT,
+
+    creation_date timestamp with time zone DEFAULT now() NOT NULL,
+    creation_user_id uuid NOT NULL,
+    modification_date timestamp with time zone DEFAULT now() NOT NULL,
+    modification_user_id uuid NOT NULL
+);
+
 DO $$
 DECLARE
     worldhoster_organization_id uuid := 'c1f4c5fb-eac3-45cf-ba2b-c975203d44db';

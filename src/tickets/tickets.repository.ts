@@ -92,6 +92,7 @@ INSERT INTO tickets
   $4,
   now())
 RETURNING
+  ticket_id,
   author_user_id,
   title,
   content`,
