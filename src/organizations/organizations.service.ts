@@ -9,7 +9,11 @@ export async function getAll(): Promise<Organization[]> {
 export async function getById(
   organizationId: string
 ): Promise<Organization | null> {
-  return repository.getOrganizationById(organizationId);
+  const organization = await repository.getOrganizationById(organizationId);
+  if (organization) {
+    organization.users = await usersService.getByOrganizationId(organizationId);
+  }
+  return organization;
 }
 
 export async function save(organization: Organization): Promise<Organization> {

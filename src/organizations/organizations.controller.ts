@@ -8,7 +8,6 @@ import {
 } from "./organizations.models";
 import { getDetailsFromError } from "../utils/errors";
 import * as organizationsHelper from "./organizations.helper";
-import * as usersService from "../users/users.service";
 
 export async function getAll(_req: Request, res: Response): Promise<void> {
   const organizations = await organizationsService.getAll();
@@ -31,11 +30,6 @@ export async function getById(req: Request, res: Response): Promise<void> {
     const organization = await organizationsService.getById(
       organizationInputJson.organization_id
     );
-    if (organization) {
-      organization.users = await usersService.getByOrganizationId(
-        organizationInputJson.organization_id
-      );
-    }
 
     const organizationJson = organization
       ? organizationsHelper.convertModelToJson(organization)

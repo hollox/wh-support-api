@@ -12,6 +12,7 @@ export async function getByOrganizationId(
     text: `
 SELECT
     users.user_id,
+    users.organization_id,
     users.email,
     users.firstname,
     users.lastname
