@@ -40,7 +40,9 @@ CREATE TABLE group_permissions (
     permission_id uuid NOT NULL REFERENCES permissions(permission_id),
 
     creation_date timestamp with time zone DEFAULT now() NOT NULL,
-    creation_user_id uuid NOT NULL
+    creation_user_id uuid NOT NULL,
+
+    UNIQUE (group_id, permission_id)
 );
 
 CREATE TABLE users (
@@ -64,7 +66,9 @@ CREATE TABLE user_groups (
     user_id uuid NOT NULL REFERENCES users(user_id),
 
     creation_date timestamp with time zone DEFAULT now() NOT NULL,
-    creation_user_id uuid NOT NULL
+    creation_user_id uuid NOT NULL,
+
+    UNIQUE (group_id, user_id)
 );
 
 CREATE TABLE authenticators (
@@ -85,7 +89,9 @@ CREATE TABLE user_authentications (
     authenticator_id uuid NOT NULL REFERENCES authenticators(authenticator_id),
 
     creation_date timestamp with time zone DEFAULT now() NOT NULL,
-    creation_user_id uuid NOT NULL
+    creation_user_id uuid NOT NULL,
+
+    UNIQUE (user_id, authentication_id, authenticator_id)
 );
 
 CREATE TABLE tickets (
