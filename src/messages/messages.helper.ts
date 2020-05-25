@@ -19,7 +19,6 @@ export function convertModelsToJson(messages: Message[]): MessageJson[] {
 }
 
 export function convertModelToJson(message: Message): MessageJson {
-  console.log({ message });
   return {
     message_id: message.messageId,
     ticket_id: message.ticketId,
