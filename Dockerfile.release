@@ -1,8 +1,10 @@
 FROM node:12-alpine
 WORKDIR /wh-tickets-api
 
+COPY package.json ./
+COPY package-lock.json ./
+RUN ["npm", "install"]
+
 COPY migrations migrations
 COPY database.json database.json
-RUN ["npm install"]
-
 CMD ["./node_modules/.bin/db-migrate", "up"]
