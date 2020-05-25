@@ -17,7 +17,8 @@ SELECT
     users.firstname,
     users.lastname
 FROM users
-WHERE organization_id = $1`,
+WHERE users.organization_id = $1
+AND users.code <> 'system'`,
     values: [organizationId]
   };
 
@@ -110,6 +111,7 @@ UPDATE users SET
   modification_user_id = $5,
   modification_date = now()
 WHERE user_id = $1
+AND code <> 'system'
 RETURNING
   user_id,
   email,

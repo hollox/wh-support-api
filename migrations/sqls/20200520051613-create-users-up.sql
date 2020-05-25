@@ -44,6 +44,7 @@ CREATE TABLE group_permissions (
 
 CREATE TABLE users (
     user_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT users_pkey PRIMARY KEY,
+    code varchar(25) NULL,
     organization_id uuid NOT NULL REFERENCES organizations(organization_id),
     email VARCHAR(250) NOT NULL,
     firstname VARCHAR(250) NULL,
@@ -152,6 +153,7 @@ BEGIN
     INSERT INTO users
     (
     user_id,
+    code,
     organization_id,
     email,
     firstname,
@@ -165,6 +167,7 @@ BEGIN
     VALUES
     (
         system_user_id,
+        'system',
         worldhoster_organization_id,
         'system@worldhoster.live',
         null,
@@ -177,6 +180,7 @@ BEGIN
     ),
     (
         customer1_user_id,
+        null,
         organization1_organization_id,
         'customer1@worldhoster.live',
         null,
@@ -189,6 +193,7 @@ BEGIN
     ),
     (
         customer2_user_id,
+        null,
         organization2_organization_id,
         'customer2@worldhoster.live',
         null,
@@ -201,6 +206,7 @@ BEGIN
     ),
     (
         employee1_user_id,
+        null,
         worldhoster_organization_id,
         'employee1@worldhoster.live',
         null,
@@ -213,6 +219,7 @@ BEGIN
     ),
     (
         manager1_user_id,
+        null,
         worldhoster_organization_id,
         'manager1@worldhoster.live',
         null,
@@ -241,7 +248,6 @@ BEGIN
     VALUES
     (
          customer_group_id,
-         'customer',
          'A person that may represent an organization that require attention to an issue.',
 
          now(),
