@@ -10,7 +10,8 @@ export function convertJsonToModel(
 ): Organization {
   return {
     organizationId: organizationJson.organization_id,
-    name: organizationJson.name
+    name: organizationJson.name,
+    users: usersHelper.convertJsonToModels(organizationJson.users)
   };
 }
 
@@ -26,8 +27,7 @@ export function convertModelToJson(
   return {
     organization_id: organization.organizationId,
     name: organization.name,
-    users:
-      organization.users && usersHelper.convertModelsToJson(organization.users)
+    users: usersHelper.convertModelsToJson(organization.users)
   };
 }
 
@@ -40,6 +40,7 @@ export function convertRowsToModels(
 export function convertRowToModel(row: OrganizationRecord): Organization {
   return {
     organizationId: row.organization_id,
-    name: row.name
+    name: row.name,
+    users: []
   };
 }

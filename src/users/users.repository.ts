@@ -18,10 +18,9 @@ SELECT
     users.lastname
 FROM users
 WHERE users.organization_id = $1
-AND users.code <> 'system'`,
+AND users.code IS DISTINCT FROM 'system'`,
     values: [organizationId]
   };
-
   const { rows } = await executeQuery<UserRecord>(query);
   return convertRowsToModels(rows);
 }

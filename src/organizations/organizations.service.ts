@@ -3,13 +3,13 @@ import * as repository from "./organizations.repository";
 import * as usersService from "../users/users.service";
 
 export async function getAll(): Promise<Organization[]> {
-  return repository.getOrganizations();
+  return repository.getAll();
 }
 
 export async function getById(
   organizationId: string
 ): Promise<Organization | null> {
-  const organization = await repository.getOrganizationById(organizationId);
+  const organization = await repository.getById(organizationId);
   if (organization) {
     organization.users = await usersService.getByOrganizationId(organizationId);
   }

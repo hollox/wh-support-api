@@ -4,7 +4,7 @@ import { executeQuery } from "../utils/postgresql";
 import { convertRowsToModels, convertRowToModel } from "./organizations.helper";
 import { SYSTEM_UUID } from "../configuration/configuration.service";
 
-export async function getOrganizations(): Promise<Organization[]> {
+export async function getAll(): Promise<Organization[]> {
   const query = {
     text: "SELECT organization_id, name FROM organizations"
   };
@@ -13,7 +13,7 @@ export async function getOrganizations(): Promise<Organization[]> {
   return convertRowsToModels(rows);
 }
 
-export async function getOrganizationById(
+export async function getById(
   organizationId: string
 ): Promise<Organization | null> {
   const query = {
