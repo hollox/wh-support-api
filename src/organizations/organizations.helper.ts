@@ -27,8 +27,7 @@ export function convertModelToJson(
     organization_id: organization.organizationId,
     name: organization.name,
     users:
-      organization.users &&
-      organization.users.map(usersHelper.convertModelToJson)
+      organization.users && usersHelper.convertModelsToJson(organization.users)
   };
 }
 

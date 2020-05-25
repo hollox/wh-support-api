@@ -1,5 +1,6 @@
 import { User } from "./users.models";
 import * as usersRepository from "./users.repository";
+import * as permissionsService from "../permissions/permissions.service";
 
 export async function getByOrganizationId(
   organizationId: string
@@ -15,8 +16,14 @@ export async function getByAuthenticationId(
   authenticationId: string,
   authenticatorId: string
 ): Promise<User | null> {
-  return usersRepository.getByAuthenticationId(
+  const user = await usersRepository.getByAuthenticationId(
     authenticationId,
     authenticatorId
   );
+
+  if (user) {
+    user.permissions = await permissionsService.getByUserId(user.userId);
+  }
+
+  return user;
 }

@@ -1,3 +1,4 @@
+DROP TABLE tickets;
 DROP TABLE group_permissions;
 DROP TABLE user_authentications;
 DROP TABLE user_groups;

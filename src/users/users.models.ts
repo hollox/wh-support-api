@@ -1,4 +1,5 @@
 import Joi from "@hapi/joi";
+import { Permission } from "../permissions/permissions.models";
 
 export interface User {
   userId: string;
@@ -6,6 +7,7 @@ export interface User {
   email: string;
   firstname: string;
   lastname: string;
+  permissions: Permission[];
 }
 
 export interface UserJson {

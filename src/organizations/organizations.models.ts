@@ -4,7 +4,6 @@ import { User, UserJson } from "../users/users.models";
 export interface Organization {
   organizationId: string;
   name: string;
-
   users?: User[];
 }
 

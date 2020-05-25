@@ -23,6 +23,7 @@ CREATE TABLE groups (
 
 CREATE TABLE permissions (
     permission_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT permissions_pkey PRIMARY KEY,
+    code VARCHAR(25) NULL,
     name VARCHAR(250) NOT NULL,
     description TEXT NULL,
 
@@ -87,6 +88,18 @@ CREATE TABLE user_authentications (
     creation_user_id uuid NOT NULL
 );
 
+CREATE TABLE tickets (
+    ticket_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT tickets_pkey PRIMARY KEY,
+    author_user_id uuid NOT NULL REFERENCES users(user_id),
+    title VARCHAR(250) NOT NULL,
+    content TEXT,
+
+    creation_date timestamp with time zone DEFAULT now() NOT NULL,
+    creation_user_id uuid NOT NULL,
+    modification_date timestamp with time zone DEFAULT now() NOT NULL,
+    modification_user_id uuid NOT NULL
+);
+
 DO $$
 DECLARE
     worldhoster_organization_id uuid := 'c1f4c5fb-eac3-45cf-ba2b-c975203d44db';
@@ -104,6 +117,8 @@ DECLARE
     manager_group_id uuid  := 'f6421726-9d98-4005-83c6-b16651c83803';
 
     auth0_authenticator_id uuid := '347b0d59-0eef-41a3-9fb6-a275c105ae0a';
+
+    access_all_permission_id uuid := 'b81a3696-4d58-4cbf-9235-3d997529ed1f';
 BEGIN
     -- --------------------------------------------------------
     -- O R G A N I Z A T I O N S
@@ -248,6 +263,7 @@ BEGIN
     VALUES
     (
          customer_group_id,
+         'customer',
          'A person that may represent an organization that require attention to an issue.',
 
          now(),
@@ -277,11 +293,12 @@ BEGIN
      );
 
     -- --------------------------------------------------------
-    -- permissions
+    -- P E R M I S S I O N S
     --
-    /*
+
     INSERT INTO permissions (
         permission_id,
+        code,
         name,
         description,
 
@@ -290,38 +307,43 @@ BEGIN
         modification_date,
         modification_user_id
     ) VALUES (
-        permission_id,
-        name,
-        description,
+        access_all_permission_id,
+        'access-all',
+        'access all tickets',
+        'Able to read all tickets from any organization',
 
         now(),
         system_user_id,
         now(),
         system_user_id
     );
-    */
 
     -- --------------------------------------------------------
-    -- group_permissions
+    -- G R O U P   P E R M I S S I O N S
     --
-    /*
-    INSERT INTO group_permissions (
+   INSERT INTO group_permissions (
         group_id,
         permission_id,
 
         creation_date,
         creation_user_id
     ) VALUES (
-        group_id,
-        permission_id,
+        employee_group_id,
+        access_all_permission_id,
+
+        now(),
+        system_user_id
+    ),
+    (
+        manager_group_id,
+        access_all_permission_id,
 
         now(),
         system_user_id
     );
-    */
 
     -- --------------------------------------------------------
-    -- G R O U P S
+    -- U S E R   G R O U P S
     --
     INSERT INTO user_groups (
         group_id,

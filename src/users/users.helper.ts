@@ -6,7 +6,8 @@ export function convertJsonToModel(userJson: UserJson): User {
     organizationId: userJson.organization_id,
     email: userJson.email,
     firstname: userJson.firstname,
-    lastname: userJson.lastname
+    lastname: userJson.lastname,
+    permissions: []
   };
 }
 
@@ -34,6 +35,7 @@ export function convertRowToModel(row: UserRecord): User {
     organizationId: row.organization_id,
     email: row.email,
     firstname: row.firstname,
-    lastname: row.lastname
+    lastname: row.lastname,
+    permissions: []
   };
 }
