@@ -94,9 +94,21 @@ CREATE TABLE user_authentications (
     UNIQUE (user_id, authentication_id, authenticator_id)
 );
 
+CREATE TABLE ticket_statuses (
+    status_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT ticket_statuses_pkey PRIMARY KEY,
+    name VARCHAR(250) NOT NULL,
+    description TEXT NOT NULL,
+
+    creation_date timestamp with time zone DEFAULT now() NOT NULL,
+    creation_user_id uuid NOT NULL,
+    modification_date timestamp with time zone DEFAULT now() NOT NULL,
+    modification_user_id uuid NOT NULL
+);
+
 CREATE TABLE tickets (
     ticket_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT tickets_pkey PRIMARY KEY,
     author_user_id uuid NOT NULL REFERENCES users(user_id),
+    status_id uuid NOT NULL REFERENCES ticket_statuses(status_id),
     title VARCHAR(250) NOT NULL,
     content TEXT,
 
@@ -137,7 +149,58 @@ DECLARE
     auth0_authenticator_id uuid := '347b0d59-0eef-41a3-9fb6-a275c105ae0a';
 
     access_all_permission_id uuid := 'b81a3696-4d58-4cbf-9235-3d997529ed1f';
+
+    open_status_id uuid := 'f0894747-a11a-4915-9b2c-42ff98692cb3';
+    in_progress_status_id uuid := '91342483-5f10-4558-9be2-4b024718eb30';
+    completed_status_id uuid := 'daa7ab46-d3f4-4b42-8b47-30abe971f378';
+
 BEGIN
+    -- --------------------------------------------------------
+    -- T I C K E T   S T A T U S E S
+    --
+    INSERT INTO ticket_statuses
+    (
+        status_id,
+        name,
+        description,
+
+        creation_date,
+        creation_user_id,
+        modification_date,
+        modification_user_id
+    )
+    VALUES
+    (
+        open_status_id,
+        'open',
+        'Ticket available to someone pick it up',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    ),
+    (
+        in_progress_status_id,
+        'in progress',
+        'Ticket where someone is working on it',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    ),
+    (
+        completed_status_id,
+        'completed',
+        'Ticket completed',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    );
+
     -- --------------------------------------------------------
     -- O R G A N I Z A T I O N S
     --
