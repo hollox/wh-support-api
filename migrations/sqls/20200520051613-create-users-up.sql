@@ -108,7 +108,7 @@ CREATE TABLE ticket_statuses (
 CREATE TABLE tickets (
     ticket_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT tickets_pkey PRIMARY KEY,
     author_user_id uuid NOT NULL REFERENCES users(user_id),
-    status_id uuid NOT NULL REFERENCES ticket_statuses(status_id),
+    status_id uuid NOT NULL REFERENCES ticket_statuses(status_id) DEFAULT 'f0894747-a11a-4915-9b2c-42ff98692cb3', -- open_status_id
     title VARCHAR(250) NOT NULL,
     content TEXT,
 

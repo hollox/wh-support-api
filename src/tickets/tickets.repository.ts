@@ -46,6 +46,7 @@ export async function getById(ticketId: string): Promise<Ticket | null> {
     text: `
 SELECT
     ticket_id,
+    status_id,
     author_user_id,
     title,
     content
@@ -93,6 +94,7 @@ INSERT INTO tickets
   now())
 RETURNING
   ticket_id,
+  status_id,
   author_user_id,
   title,
   content`,
@@ -104,24 +106,44 @@ function update(ticket: Ticket): QueryConfig {
   return {
     text: `
 UPDATE ticket SET
-  author_user_id = $2,
-  title = $3,
-  content = $4,
+  status_id = $2
+  author_user_id = $3,
+  title = $4,
+  content = $5,
   
-  modification_user_id = $5,
+  modification_user_id = $6,
   modification_date = now()
 WHERE ticket_id = $1
 RETURNING
   ticket_id,
+  status_id,
   author_user_id,
   title,
   content`,
     values: [
       ticket.ticketId,
+      ticket.statusId,
       ticket.authorUserId,
       ticket.title,
       ticket.content,
       SYSTEM_UUID
     ]
   };
+}
+
+export async function setStatus(
+  ticketId: string,
+  statusId: string
+): Promise<void> {
+  const query = {
+    text: `
+UPDATE tickets SET
+  status_id = $2,
+  
+  modification_user_id = $3,
+  modification_date = now()
+WHERE ticket_id = $1`,
+    values: [ticketId, statusId, SYSTEM_UUID]
+  };
+  return executeQuery(query).then(undefined);
 }

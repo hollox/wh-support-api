@@ -19,6 +19,10 @@ routerV1.post("/organizations", handleErrors(organizationsController.save));
 
 routerV1.get("/tickets", handleErrors(ticketsController.getAll));
 routerV1.get("/tickets/:ticket_id", handleErrors(ticketsController.getById));
+routerV1.post(
+  "/tickets/:ticket_id/status",
+  handleErrors(ticketsController.setStatus)
+);
 routerV1.post("/tickets", handleErrors(ticketsController.save));
 
 routerV1.post("/users/who-am-i", handleErrors(usersController.whoAmI));

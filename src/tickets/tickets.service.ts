@@ -28,3 +28,10 @@ export async function getById(ticketId: string): Promise<Ticket | null> {
 export async function save(ticket: Ticket): Promise<Ticket> {
   return ticketsRepository.save(ticket);
 }
+
+export async function setStatus(
+  ticketId: string,
+  statusId: string
+): Promise<void> {
+  return ticketsRepository.setStatus(ticketId, statusId);
+}

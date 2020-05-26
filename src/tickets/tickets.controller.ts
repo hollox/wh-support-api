@@ -4,7 +4,11 @@ import { User } from "../users/users.models";
 import * as ticketsService from "./tickets.service";
 import { requiredOptions } from "../utils/validations";
 import { getDetailsFromError } from "../utils/errors";
-import { getTicketByIdSchema, saveTicketSchema } from "./tickets.models";
+import {
+  getTicketByIdSchema,
+  saveTicketSchema,
+  STATUS_COMPLETED
+} from "./tickets.models";
 import * as ticketsHelper from "./tickets.helper";
 
 export async function getAll(_req: Request, res: Response): Promise<void> {
@@ -46,5 +50,36 @@ export async function save(req: Request, res: Response): Promise<void> {
     const savedTicketJson = ticketsHelper.convertModelToJson(savedTicket);
 
     res.status(constants.HTTP_STATUS_OK).json(savedTicketJson);
+  }
+}
+
+export async function setStatus(req: Request, res: Response): Promise<void> {
+  const ticketId = req.params.ticket_id;
+  const statusId = req.body.status_id;
+
+  if (!statusId) {
+    res
+      .status(constants.HTTP_STATUS_BAD_REQUEST)
+      .json({ errors: "status_id is required" });
+    return;
+  }
+  if (!ticketId) {
+    res
+      .status(constants.HTTP_STATUS_BAD_REQUEST)
+      .json({ errors: "ticket_id is required" });
+    return;
+  }
+  const ticket = await ticketsService.getById(ticketId);
+  if (!ticket) {
+    res
+      .status(constants.HTTP_STATUS_BAD_REQUEST)
+      .json({ errors: `No ticket found with id ${ticketId}` });
+  } else if (ticket.statusId === STATUS_COMPLETED) {
+    res
+      .status(constants.HTTP_STATUS_BAD_REQUEST)
+      .json({ errors: "Invalid status: Ticket is completed" });
+  } else {
+    ticketsService.setStatus(ticketId, statusId);
+    res.status(constants.HTTP_STATUS_NO_CONTENT).end();
   }
 }
