@@ -86,6 +86,7 @@ INSERT INTO users
   now())
 RETURNING
   user_id,
+  organization_id,
   email,
   firstname,
   lastname`,
@@ -113,6 +114,7 @@ WHERE user_id = $1
 AND code <> 'system'
 RETURNING
   user_id,
+  organization_id,
   email,
   firstname,
   lastname`,

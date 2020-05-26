@@ -1,6 +1,9 @@
 import { User, UserJson, UserRecord } from "./users.models";
 
 export function convertJsonToModels(usersJson: UserJson[]): User[] {
+  if (!usersJson) {
+    return [];
+  }
   return usersJson.map(convertJsonToModel);
 }
 

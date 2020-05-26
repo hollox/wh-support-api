@@ -38,8 +38,6 @@ export async function authenticate(
         .end();
     }
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error);
     logger.error(error);
     res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).end();
   }
