@@ -25,7 +25,7 @@ routerV1.post(
 );
 routerV1.post("/tickets", handleErrors(ticketsController.save));
 
-routerV1.post("/users/who-am-i", usersController.whoAmI);
+routerV1.post("/users/who-am-i", handleErrors(usersController.whoAmI));
 routerV1.post("/users", handleErrors(usersController.save));
 
 routerV1.post("/messages", handleErrors(messagesController.save));

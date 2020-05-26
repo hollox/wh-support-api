@@ -37,6 +37,7 @@ export async function authenticate(
         .end();
     }
   } catch (error) {
+    console.log(error);
     res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).end();
   }
 }
