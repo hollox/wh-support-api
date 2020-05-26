@@ -105,8 +105,8 @@ RETURNING
 function update(ticket: Ticket): QueryConfig {
   return {
     text: `
-UPDATE ticket SET
-  status_id = $2
+UPDATE tickets SET
+  status_id = $2,
   author_user_id = $3,
   title = $4,
   content = $5,
