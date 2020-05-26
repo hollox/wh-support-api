@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { constants } from "http2";
 import * as authenticationService from "./authentication.service";
 import { Configuration } from "../configuration/configuration.model";
+import { logger } from "../utils/logger";
 
 export async function authenticate(
   req: Request,
@@ -37,7 +38,9 @@ export async function authenticate(
         .end();
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
+    logger.error(error);
     res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).end();
   }
 }
