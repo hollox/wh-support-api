@@ -36,7 +36,6 @@ ON users.user_id = tickets.author_user_id
 WHERE users.organization_id = $1`,
     values: [organizationId]
   };
-
   const { rows } = await executeQuery<TicketRecord>(query);
   return convertRowsToModels(rows);
 }
