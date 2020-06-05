@@ -11,24 +11,6 @@ module.exports.fields = {
   name: {
     type: "varchar(250)",
     notNull: true
-  },
-  creation_date: {
-    type: "varchar(250)",
-    notNull: true,
-    default: "now()"
-  },
-  creation_user_id: {
-    type: "uuid",
-    notNull: true
-  },
-  modification_date: {
-    type: "varchar(250)",
-    notNull: true,
-    default: "now()"
-  },
-  modification_user_id: {
-    type: "uuid",
-    notNull: true
   }
 };
 module.exports.insert = function(db, organizationId, name) {

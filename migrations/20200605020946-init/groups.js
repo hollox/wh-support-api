@@ -13,23 +13,5 @@ module.exports.fields = {
   description: {
     type: "text",
     notNull: false
-  },
-  creation_date: {
-    type: "varchar(250)",
-    notNull: true,
-    default: "now()"
-  },
-  creation_user_id: {
-    type: "uuid",
-    notNull: true
-  },
-  modification_date: {
-    type: "varchar(250)",
-    notNull: true,
-    default: "now()"
-  },
-  modification_user_id: {
-    type: "uuid",
-    notNull: true
   }
 };
