@@ -1,7 +1,7 @@
 module.exports = {
-  createTable: function(db, name, fields) {
-    console.log(`creating table ${name}`);
-    return db.createTable(name, fields);
+  createTable: function(db, table) {
+    console.log(`creating table ${table.name}`);
+    return db.createTable(table.name, table.fields);
   },
   dropTable: function(db, name, callback) {
     console.log(`dropping table ${name}`);
