@@ -1,4 +1,4 @@
-const constants = require("./constants");
+const constants = require("../utils/constants");
 
 module.exports.name = "organizations";
 module.exports.fields = {
