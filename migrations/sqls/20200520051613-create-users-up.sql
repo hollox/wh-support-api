@@ -130,6 +130,10 @@ CREATE TABLE messages (
     modification_user_id uuid NOT NULL
 );
 
+-- \set myvar 5
+-- DECLARE vSite varchar;
+-- DECLARE worldhoster_organization_id2 varchar default 'c1f4c5fb-eac3-45cf-ba2b-c975203d44db';
+
 DO $$
 DECLARE
     worldhoster_organization_id uuid := 'c1f4c5fb-eac3-45cf-ba2b-c975203d44db';
@@ -148,7 +152,12 @@ DECLARE
 
     auth0_authenticator_id uuid := '347b0d59-0eef-41a3-9fb6-a275c105ae0a';
 
-    access_all_permission_id uuid := 'b81a3696-4d58-4cbf-9235-3d997529ed1f';
+    tickets_display_all_permission_id uuid := 'b81a3696-4d58-4cbf-9235-3d997529ed1f';
+    tickets_display_permission_id uuid := '659e5937-d688-4efa-a01c-e2b726f287ca';
+    tickets_create_permission_id uuid := 'bc8dca19-5172-4611-b069-cf865aa5f531';
+
+    organizations_display_all_permission_id uuid := '79fc5dc8-b9a9-4bda-a826-9a9e3eaf84f6';
+    organizations_create_permission_id uuid := '4a1e2949-4b14-4bfd-b131-a5c6ac5031c3';
 
     open_status_id uuid := 'f0894747-a11a-4915-9b2c-42ff98692cb3';
     in_progress_status_id uuid := '91342483-5f10-4558-9be2-4b024718eb30';
@@ -388,10 +397,54 @@ BEGIN
         modification_date,
         modification_user_id
     ) VALUES (
-        access_all_permission_id,
-        'access-all',
-        'access all tickets',
+        tickets_display_all_permission_id,
+        'tickets-display-all',
+        'display all tickets',
         'Able to read all tickets from any organization',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    ),
+    (
+        tickets_display_permission_id,
+        'tickets-display',
+        'display tickets related to user organization',
+        'Able to read all tickets from assigned organization',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    ),
+    (
+        tickets_create_permission_id,
+        'tickets-create',
+        'Create a ticket',
+        'Able to create a ticket assigned to his organization',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    ),
+    (
+        organizations_display_all_permission_id,
+        'organizations-display-all',
+        'Display all organizations',
+        'Able to read all tickets from any organization',
+
+        now(),
+        system_user_id,
+        now(),
+        system_user_id
+    ),
+    (
+        organizations_create_permission_id,
+        'organizations-create',
+        'Create an organization',
+        'Able to create an organization',
 
         now(),
         system_user_id,
@@ -410,15 +463,35 @@ BEGIN
         creation_user_id
     ) VALUES (
         employee_group_id,
-        access_all_permission_id,
+        tickets_display_all_permission_id,
+
+        now(),
+        system_user_id
+    ),
+    (
+        employee_group_id,
+        organizations_display_all_permission_id,
 
         now(),
         system_user_id
     ),
     (
         manager_group_id,
-        access_all_permission_id,
+        tickets_display_all_permission_id,
 
+        now(),
+        system_user_id
+    ),
+    (
+        manager_group_id,
+        organizations_display_all_permission_id,
+
+        now(),
+        system_user_id
+    ),
+    (
+        manager_group_id,
+        organizations_create_permission_id,
         now(),
         system_user_id
     );
