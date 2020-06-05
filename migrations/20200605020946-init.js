@@ -49,9 +49,12 @@ exports.up = async function(db) {
   await insertIntoOrganization(worldhoster_organization_id, "WorldHoster", db);
   await insertIntoOrganization(organization1_organization_id, "Organization1", db);
   await insertIntoOrganization(organization2_organization_id, "Organization2", db);
+
+  await createTableUsers(db);
 };
 
 exports.down = function(db, callback) {
+  db.dropTable("users", callback);
   db.dropTable("organizations", callback);
 };
 
@@ -59,6 +62,54 @@ exports._meta = {
   version: 1
 };
 
+async function createTableUsers(db) {
+  return db.createTable("users", {
+    user_id: {
+      type: "uuid",
+      notNull: true,
+      primaryKey: true,
+      default: "public.uuid_generate_v4()"
+    },
+    code: {
+      type: "varchar(25)",
+      notNull: false
+    },
+    organization_id: {
+      type: "varchar(25)",
+      notNull: false
+    },
+    email: {
+      type: "varchar(250)",
+      notNull: false
+    },
+    firstname: {
+      type: "varchar(250)",
+      notNull: false
+    },
+    lastname: {
+      type: "varchar(250)",
+      notNull: false
+    },
+    creation_date: {
+      type: "varchar(250)",
+      notNull: true,
+      default: "now()"
+    },
+    creation_user_id: {
+      type: "uuid",
+      notNull: true
+    },
+    modification_date: {
+      type: "varchar(250)",
+      notNull: true,
+      default: "now()"
+    },
+    modification_user_id: {
+      type: "uuid",
+      notNull: true
+    }
+  });
+}
 function createTableOrganizations(db) {
   return db.createTable("organizations", {
     organization_id: {
