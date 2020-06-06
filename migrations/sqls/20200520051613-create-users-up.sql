@@ -1,16 +1,4 @@
---
---CREATE TABLE user_authentications (
---    row_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT user_authentications_pkey PRIMARY KEY,
---
---    user_id uuid NOT NULL REFERENCES users(user_id),
---    authentication_id VARCHAR(250),
---    authenticator_id uuid NOT NULL REFERENCES authenticators(authenticator_id),
---
---    creation_date timestamp with time zone DEFAULT now() NOT NULL,
---    creation_user_id uuid NOT NULL,
---
---    UNIQUE (user_id, authentication_id, authenticator_id)
---);
+
 --
 --CREATE TABLE ticket_statuses (
 --    status_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT ticket_statuses_pkey PRIMARY KEY,
