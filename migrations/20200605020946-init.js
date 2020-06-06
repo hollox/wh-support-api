@@ -25,6 +25,7 @@ const userAuthentications = require("./20200605020946-init/user-authentications"
 const userGroups = require("./20200605020946-init/user-groups");
 const permissions = require("./20200605020946-init/permissions");
 const ticketStatuses = require("./20200605020946-init/ticket-statuses");
+const tickets = require("./20200605020946-init/tickets");
 const authenticators = require("./20200605020946-init/authenticators");
 
 exports.up = async function(db) {
@@ -37,6 +38,7 @@ exports.up = async function(db) {
   await dbUtils.createTable(db, ticketStatuses);
   await dbUtils.createTable(db, authenticators);
   await dbUtils.createTable(db, users);
+  await dbUtils.createTable(db, tickets);
   await dbUtils.createTable(db, groups);
   await dbUtils.createTable(db, permissions);
   await dbUtils.createTable(db, groupPermissions);
@@ -45,6 +47,7 @@ exports.up = async function(db) {
 };
 
 exports.down = function(db, callback) {
+  dbUtils.dropTable(db, tickets.name, callback);
   dbUtils.dropTable(db, ticketStatuses.name, callback);
   dbUtils.dropTable(db, userAuthentications.name, callback);
   dbUtils.dropTable(db, userGroups.name, callback);

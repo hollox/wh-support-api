@@ -1,15 +1,5 @@
 
---
---CREATE TABLE ticket_statuses (
---    status_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT ticket_statuses_pkey PRIMARY KEY,
---    name VARCHAR(250) NOT NULL,
---    description TEXT NOT NULL,
---
---    creation_date timestamp with time zone DEFAULT now() NOT NULL,
---    creation_user_id uuid NOT NULL,
---    modification_date timestamp with time zone DEFAULT now() NOT NULL,
---    modification_user_id uuid NOT NULL
---);
+
 --
 --CREATE TABLE tickets (
 --    ticket_id uuid DEFAULT public.uuid_generate_v4() NOT NULL CONSTRAINT tickets_pkey PRIMARY KEY,
@@ -17,11 +7,7 @@
 --    status_id uuid NOT NULL REFERENCES ticket_statuses(status_id) DEFAULT 'f0894747-a11a-4915-9b2c-42ff98692cb3', -- open_status_id
 --    title VARCHAR(250) NOT NULL,
 --    content TEXT,
---
---    creation_date timestamp with time zone DEFAULT now() NOT NULL,
---    creation_user_id uuid NOT NULL,
---    modification_date timestamp with time zone DEFAULT now() NOT NULL,
---    modification_user_id uuid NOT NULL
+
 --);
 --
 --CREATE TABLE messages (
