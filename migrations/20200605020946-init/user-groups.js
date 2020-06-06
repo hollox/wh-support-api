@@ -17,6 +17,7 @@ module.exports.fields = {
     type: "uuid",
     notNull: true,
     foreignKey: dbUtils.createForeignKey("user_groups", "user_id", "users", "user_id")
-  }
+  },
+  ...dbUtils.creationMetaFields
 };
 module.exports.uniqueTupples = [["group_id", "user_id"]];

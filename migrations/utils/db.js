@@ -1,4 +1,4 @@
-const metaFields = {
+const creationMetaFields = {
   creation_date: {
     type: "varchar(250)",
     notNull: true,
@@ -7,7 +7,10 @@ const metaFields = {
   creation_user_id: {
     type: "uuid",
     notNull: true
-  },
+  }
+};
+
+const modificationMetaFields = {
   modification_date: {
     type: "varchar(250)",
     notNull: true,
@@ -21,7 +24,7 @@ const metaFields = {
 
 function createTable(db, table) {
   console.log(`creating table ${table.name}`);
-  return db.createTable(table.name, { ...table.fields, ...metaFields }).then((result) => {
+  return db.createTable(table.name, table.fields).then((result) => {
     if (table.uniqueTupples) {
       table.uniqueTupples.forEach((tupple) => {
         const constraintName = `${table.name}_${tupple.join("_")}_uidx`;
@@ -53,6 +56,8 @@ function createForeignKey(tableName, fieldName, fkTableName, fkFieldName) {
 }
 
 module.exports = {
+  creationMetaFields,
+  modificationMetaFields,
   createTable,
   dropTable,
   createForeignKey

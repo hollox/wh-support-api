@@ -1,3 +1,5 @@
+const dbUtils = require("../utils/db");
+
 module.exports.name = "groups";
 module.exports.fields = {
   group_id: {
@@ -13,5 +15,7 @@ module.exports.fields = {
   description: {
     type: "text",
     notNull: false
-  }
+  },
+  ...dbUtils.creationMetaFields,
+  ...dbUtils.modificationMetaFields
 };

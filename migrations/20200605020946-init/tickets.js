@@ -25,5 +25,7 @@ module.exports.fields = {
   content: {
     type: "text",
     notNull: true
-  }
+  },
+  ...dbUtils.creationMetaFields,
+  ...dbUtils.modificationMetaFields
 };

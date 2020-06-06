@@ -1,3 +1,5 @@
+const dbUtils = require("../utils/db");
+
 module.exports.name = "users";
 module.exports.fields = {
   user_id: {
@@ -25,5 +27,7 @@ module.exports.fields = {
   lastname: {
     type: "varchar(250)",
     notNull: false
-  }
+  },
+  ...dbUtils.creationMetaFields,
+  ...dbUtils.modificationMetaFields
 };

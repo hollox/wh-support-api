@@ -26,6 +26,7 @@ module.exports.fields = {
       "authenticators",
       "authenticator_id"
     )
-  }
+  },
+  ...dbUtils.creationMetaFields
 };
 module.exports.uniqueTupples = [["user_id", "authentication_id", "authenticator_id"]];

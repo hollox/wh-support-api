@@ -1,3 +1,5 @@
+const dbUtils = require("../utils/db");
+
 module.exports.name = "permissions";
 module.exports.fields = {
   permission_id: {
@@ -17,5 +19,7 @@ module.exports.fields = {
   description: {
     type: "text",
     notNull: false
-  }
+  },
+  ...dbUtils.creationMetaFields,
+  ...dbUtils.modificationMetaFields
 };

@@ -1,4 +1,5 @@
 const constants = require("../utils/constants");
+const dbUtils = require("../utils/db");
 
 module.exports.name = "organizations";
 module.exports.fields = {
@@ -11,7 +12,9 @@ module.exports.fields = {
   name: {
     type: "varchar(250)",
     notNull: true
-  }
+  },
+  ...dbUtils.creationMetaFields,
+  ...dbUtils.modificationMetaFields
 };
 module.exports.insert = function(db, organizationId, name) {
   return db.insert(

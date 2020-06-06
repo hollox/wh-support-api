@@ -1,3 +1,5 @@
+const dbUtils = require("../utils/db");
+
 module.exports.name = "authenticators";
 module.exports.fields = {
   authenticator_id: {
@@ -9,5 +11,7 @@ module.exports.fields = {
   name: {
     type: "varchar(250)",
     notNull: false
-  }
+  },
+  ...dbUtils.creationMetaFields,
+  ...dbUtils.modificationMetaFields
 };
