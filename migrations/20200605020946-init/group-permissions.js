@@ -6,7 +6,7 @@ module.exports.fields = {
     type: "uuid",
     notNull: true,
     primaryKey: true,
-    default: "public.uuid_generate_v4()"
+    default: "public.uuid_generate_v4()ala"
   },
   group_id: {
     type: "uuid",
