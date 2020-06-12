@@ -1,3 +1,4 @@
+const constants = require("../utils/constants");
 const dbUtils = require("../utils/db");
 
 module.exports.name = "groups";
@@ -18,4 +19,20 @@ module.exports.fields = {
   },
   ...dbUtils.creationMetaFields,
   ...dbUtils.modificationMetaFields
+};
+module.exports.insert = function(db, groupId, name, description) {
+  return db.insert(
+    "groups",
+    [
+      "group_id",
+      "name",
+      "description",
+
+      "creation_date",
+      "creation_user_id",
+      "modification_date",
+      "modification_user_id"
+    ],
+    [groupId, name, description, constants.now, constants.system_user_id, constants.now, constants.system_user_id]
+  );
 };

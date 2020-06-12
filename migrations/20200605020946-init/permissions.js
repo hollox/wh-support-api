@@ -1,3 +1,4 @@
+const constants = require("../utils/constants");
 const dbUtils = require("../utils/db");
 
 module.exports.name = "permissions";
@@ -22,4 +23,30 @@ module.exports.fields = {
   },
   ...dbUtils.creationMetaFields,
   ...dbUtils.modificationMetaFields
+};
+module.exports.insert = function(db, permissionId, code, name, description) {
+  return db.insert(
+    "permissions",
+    [
+      "permission_id",
+      "code",
+      "name",
+      "description",
+
+      "creation_date",
+      "creation_user_id",
+      "modification_date",
+      "modification_user_id"
+    ],
+    [
+      permissionId,
+      code,
+      name,
+      description,
+      constants.now,
+      constants.system_user_id,
+      constants.now,
+      constants.system_user_id
+    ]
+  );
 };
