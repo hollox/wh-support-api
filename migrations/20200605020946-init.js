@@ -48,6 +48,9 @@ exports.up = async function(db) {
   await ticketStatuses.insert(db, constants.completed_status_id, "completed", "Ticket completed");
 
   await dbUtils.createTable(db, authenticators);
+
+  authenticators.insert(db, constants.auth0_authenticator_id, "auth0");
+
   await dbUtils.createTable(db, users);
 
   await users.insert(
@@ -158,6 +161,13 @@ exports.up = async function(db) {
   );
 
   await dbUtils.createTable(db, groupPermissions);
+  /*
+  groupPermissions.insert(db, constants.employee_group_id, constants.tickets_display_all_permission_id);
+  groupPermissions.insert(db, constants.employee_group_id, constants.organizations_display_all_permission_id);
+  groupPermissions.insert(db, constants.manager_group_id, constants.tickets_display_all_permission_id);
+  groupPermissions.insert(db, constants.manager_group_id, constants.organizations_display_all_permission_id);
+  groupPermissions.insert(db, constants.manager_group_id, constants.organizations_create_permission_id);
+*/
   await dbUtils.createTable(db, userGroups);
   await dbUtils.createTable(db, userAuthentications);
 };

@@ -1,6 +1,6 @@
-const creationMetaFields = {
+module.exports.creationMetaFields = {
   creation_date: {
-    type: "varchar(250)",
+    type: "timestamp with time zone",
     notNull: true,
     default: "now()"
   },
@@ -10,9 +10,9 @@ const creationMetaFields = {
   }
 };
 
-const modificationMetaFields = {
+module.exports.modificationMetaFields = {
   modification_date: {
-    type: "varchar(250)",
+    type: "timestamp with time zone",
     notNull: true,
     default: "now()"
   },
@@ -22,7 +22,7 @@ const modificationMetaFields = {
   }
 };
 
-function createTable(db, table) {
+module.exports.createTable = function(db, table) {
   console.log(`creating table ${table.name}`);
   return db.createTable(table.name, table.fields).then((result) => {
     if (table.uniqueTupples) {
@@ -34,14 +34,14 @@ function createTable(db, table) {
     }
     return result;
   });
-}
+};
 
-function dropTable(db, name, callback) {
+module.exports.dropTable = function(db, name, callback) {
   console.log(`dropping table ${name}`);
   db.dropTable(name, callback);
-}
+};
 
-function createForeignKey(tableName, fieldName, fkTableName, fkFieldName) {
+module.exports.createForeignKey = function(tableName, fieldName, fkTableName, fkFieldName) {
   return {
     name: `${tableName}_${fieldName}_fk`,
     table: fkTableName,
@@ -53,12 +53,4 @@ function createForeignKey(tableName, fieldName, fkTableName, fkFieldName) {
       onUpdate: "RESTRICT"
     }
   };
-}
-
-module.exports = {
-  creationMetaFields,
-  modificationMetaFields,
-  createTable,
-  dropTable,
-  createForeignKey
 };

@@ -1,3 +1,4 @@
+const constants = require("../utils/constants");
 const dbUtils = require("../utils/db");
 
 module.exports.name = "group_permissions";
@@ -6,7 +7,7 @@ module.exports.fields = {
     type: "uuid",
     notNull: true,
     primaryKey: true,
-    default: "public.uuid_generate_v4()ala"
+    default: "public.uuid_generate_v4()"
   },
   group_id: {
     type: "uuid",
@@ -21,3 +22,10 @@ module.exports.fields = {
   ...dbUtils.creationMetaFields
 };
 module.exports.uniqueTupples = [["group_id", "permission_id"]];
+module.exports.insert = function(db, groupId, permissionId) {
+  return db.insert(
+    "group_permissions",
+    ["group_id", "permission_id", "creation_date", "creation_user_id"],
+    [groupId, permissionId, constants.now, constants.system_user_id]
+  );
+};
