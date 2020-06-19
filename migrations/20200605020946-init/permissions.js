@@ -7,7 +7,9 @@ module.exports.fields = {
     type: "uuid",
     notNull: true,
     primaryKey: true,
-    default: "public.uuid_generate_v4()"
+    defaultValue: {
+      prep: "public.uuid_generate_v4()"
+    }
   },
   code: {
     type: "varchar(25)",

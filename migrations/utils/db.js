@@ -2,7 +2,9 @@ module.exports.creationMetaFields = {
   creation_date: {
     type: "timestamp with time zone",
     notNull: true,
-    default: "now()"
+    defaultValue: {
+      prep: "now()"
+    }
   },
   creation_user_id: {
     type: "uuid",
@@ -14,7 +16,9 @@ module.exports.modificationMetaFields = {
   modification_date: {
     type: "timestamp with time zone",
     notNull: true,
-    default: "now()"
+    defaultValue: {
+      prep: "now()"
+    }
   },
   modification_user_id: {
     type: "uuid",
