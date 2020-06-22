@@ -16,16 +16,44 @@ exports.setup = function(options, seedLink) {
 
 const dbUtils = require("./utils/db");
 
-const messages = require("./schema/messages");
-
 exports.up = async function(db) {
-  await dbUtils.createTable(db, messages);
+  await dbUtils.createTable(db, table);
 };
 
 exports.down = function(db, callback) {
-  dbUtils.dropTable(db, messages.name, callback);
+  dbUtils.dropTable(db, table.name, callback);
 };
 
 exports._meta = {
   version: 1
+};
+
+const table = {
+  name: "messages",
+  fields: {
+    message_id: {
+      type: "uuid",
+      notNull: true,
+      primaryKey: true,
+      defaultValue: {
+        prep: "public.uuid_generate_v4()"
+      }
+    },
+    ticket_id: {
+      type: "uuid",
+      notNull: true,
+      foreignKey: dbUtils.createForeignKey("messages", "ticket_id", "tickets", "ticket_id")
+    },
+    author_user_id: {
+      type: "uuid",
+      notNull: true,
+      foreignKey: dbUtils.createForeignKey("messages", "author_user_id", "users", "user_id")
+    },
+    content: {
+      type: "text",
+      notNull: true
+    },
+    ...dbUtils.creationMetaFields,
+    ...dbUtils.modificationMetaFields
+  }
 };

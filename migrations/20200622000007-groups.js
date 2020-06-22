@@ -17,24 +17,22 @@ exports.setup = function(options, seedLink) {
 const constants = require("./utils/constants");
 const dbUtils = require("./utils/db");
 
-const groups = require("./schema/groups");
-
 exports.up = async function(db) {
-  await dbUtils.createTable(db, groups);
+  await dbUtils.createTable(db, table);
 
-  groups.insert(
+  insert(
     db,
     constants.customer_group_id,
     "customer",
     "A person that may represent an organization that require attention to an issue."
   );
-  groups.insert(
+  insert(
     db,
     constants.employee_group_id,
     "employee",
     "A person that work for World Hoster or a partner that is trying to resolve the customer ticket."
   );
-  groups.insert(
+  insert(
     db,
     constants.manager_group_id,
     "Manager",
@@ -43,9 +41,49 @@ exports.up = async function(db) {
 };
 
 exports.down = function(db, callback) {
-  dbUtils.dropTable(db, groups.name, callback);
+  dbUtils.dropTable(db, table.name, callback);
 };
 
 exports._meta = {
   version: 1
 };
+
+const table = {
+  name: "groups",
+  fields: {
+    group_id: {
+      type: "uuid",
+      notNull: true,
+      primaryKey: true,
+      defaultValue: {
+        prep: "public.uuid_generate_v4()"
+      }
+    },
+    name: {
+      type: "varchar(250)",
+      notNull: false
+    },
+    description: {
+      type: "text",
+      notNull: false
+    },
+    ...dbUtils.creationMetaFields,
+    ...dbUtils.modificationMetaFields
+  }
+};
+function insert(db, groupId, name, description) {
+  return db.insert(
+    "groups",
+    [
+      "group_id",
+      "name",
+      "description",
+
+      "creation_date",
+      "creation_user_id",
+      "modification_date",
+      "modification_user_id"
+    ],
+    [groupId, name, description, constants.now, constants.system_user_id, constants.now, constants.system_user_id]
+  );
+}
