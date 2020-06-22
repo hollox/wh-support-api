@@ -1,5 +1,5 @@
 import { Pool, QueryConfig, QueryResult } from "pg";
-import { logger } from "./logger";
+import { logger } from "../utils/logger";
 import { getConfiguration } from "../configuration/configuration.service";
 
 const configurations = getConfiguration();

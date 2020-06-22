@@ -1,6 +1,6 @@
 import { PermissionRecord } from "./permissions.models";
 import { Permission } from "../../entities/permissions.models";
-import { executeQuery } from "../../utils/postgresql";
+import { executeQuery } from "../postgresql";
 import { convertRecordsToModels } from "./permissions.helper";
 
 export async function getByUserId(userId: string): Promise<Permission[]> {

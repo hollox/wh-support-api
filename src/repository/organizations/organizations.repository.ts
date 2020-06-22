@@ -1,7 +1,7 @@
 import { Organization } from "../../api/organizations/organizations.models";
 import { OrganizationRecord } from "./organizations.models";
 import { QueryConfig } from "pg";
-import { executeQuery } from "../../utils/postgresql";
+import { executeQuery } from "../postgresql";
 import { convertRecordsToModels, convertRecordToModel } from "./organizations.helper";
 import { SYSTEM_UUID } from "../../configuration/configuration.service";
 

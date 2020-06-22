@@ -1,4 +1,4 @@
-import { app } from "./app";
+import { app } from "./api/app";
 import { logger } from "./utils/logger";
 import { getConfiguration } from "./configuration/configuration.service";
 

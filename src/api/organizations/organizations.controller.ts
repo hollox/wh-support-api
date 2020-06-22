@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { constants } from "http2";
 import * as organizationsService from "../../business/organizations.service";
-import { requiredOptions } from "../../utils/validations";
+import { requiredOptions } from "../validations";
 import {
   getOrganizationByIdSchema,
   saveOrganizationSchema
 } from "./organizations.models";
-import { getDetailsFromError } from "../../utils/errors";
+import { getDetailsFromError } from "../errors";
 import * as organizationsHelper from "./organizations.helper";
 
 export async function getAll(_req: Request, res: Response): Promise<void> {

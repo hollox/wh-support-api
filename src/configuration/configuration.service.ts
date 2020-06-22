@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { Configuration } from "./configuration.model";
+import { Configuration } from "./configuration.models";
 
 dotenv.config();
 

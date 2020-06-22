@@ -1,5 +1,5 @@
 import { Ticket } from "../../api/tickets/tickets.models";
-import { executeQuery } from "../../utils/postgresql";
+import { executeQuery } from "../postgresql";
 import { TicketRecord } from "./tickets.models";
 import { convertRecordsToModels, convertRecordToModel } from "./tickets.helper";
 import { QueryConfig } from "pg";

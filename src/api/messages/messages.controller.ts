@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { requiredOptions } from "../../utils/validations";
-import { getDetailsFromError } from "../../utils/errors";
+import { requiredOptions } from "../validations";
+import { getDetailsFromError } from "../errors";
 import { constants } from "http2";
 import * as messagesHelper from "./messages.helper";
 import * as messagesService from "../../business/messages.service";

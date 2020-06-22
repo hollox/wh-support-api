@@ -1,4 +1,4 @@
-import { executeQuery } from "../../utils/postgresql";
+import { executeQuery } from "../postgresql";
 import { User } from "../../entities/users.models";
 import { UserRecord } from "./users.models";
 import { convertRecordsToModels, convertRecordToModel } from "./users.helper";

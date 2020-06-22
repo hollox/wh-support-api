@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as ticketsController from "../tickets/tickets.controller";
 import * as organizationsController from "../organizations/organizations.controller";
-import { handleErrors } from "../../utils/errors";
+import { handleErrors } from "../errors";
 import * as usersController from "../users/users.controller";
 import * as messagesController from "../messages/messages.controller";
 import * as authenticationMiddleware from "../authentication/authentication.middleware";

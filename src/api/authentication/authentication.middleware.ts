@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { constants } from "http2";
 import * as authenticationService from "../../business/authentication.service";
-import { Configuration } from "../../configuration/configuration.model";
+import { Configuration } from "../../configuration/configuration.models";
 import { logger } from "../../utils/logger";
 
 export async function authenticate(req: Request, res: Response, next: NextFunction) {

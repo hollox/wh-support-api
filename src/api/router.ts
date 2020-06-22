@@ -1,6 +1,6 @@
 import cors from "cors";
 import { Router } from "express";
-import { routerV1 } from "./api/routers/router-v1";
+import { routerV1 } from "./routers/router-v1";
 import parser from "body-parser";
 
 export const router = Router();

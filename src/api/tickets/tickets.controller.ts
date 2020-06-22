@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { constants } from "http2";
 import { User } from "../../entities/users.models";
 import * as ticketsService from "../../business/tickets.service";
-import { requiredOptions } from "../../utils/validations";
-import { getDetailsFromError } from "../../utils/errors";
+import { requiredOptions } from "../validations";
+import { getDetailsFromError } from "../errors";
 import { getTicketByIdSchema, saveTicketSchema, STATUS_COMPLETED } from "./tickets.models";
 import * as ticketsHelper from "./tickets.helper";
 
