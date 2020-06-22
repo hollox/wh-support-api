@@ -161,14 +161,20 @@ exports.up = async function(db) {
   );
 
   await dbUtils.createTable(db, groupPermissions);
-  /*
+
   groupPermissions.insert(db, constants.employee_group_id, constants.tickets_display_all_permission_id);
   groupPermissions.insert(db, constants.employee_group_id, constants.organizations_display_all_permission_id);
   groupPermissions.insert(db, constants.manager_group_id, constants.tickets_display_all_permission_id);
   groupPermissions.insert(db, constants.manager_group_id, constants.organizations_display_all_permission_id);
   groupPermissions.insert(db, constants.manager_group_id, constants.organizations_create_permission_id);
-*/
+
   await dbUtils.createTable(db, userGroups);
+
+  userGroups.insert(db, constants.customer_group_id, constants.customer1_user_id);
+  userGroups.insert(db, constants.customer_group_id, constants.customer2_user_id);
+  userGroups.insert(db, constants.employee_group_id, constants.employee1_user_id);
+  userGroups.insert(db, constants.manager_group_id, constants.manager1_user_id);
+
   await dbUtils.createTable(db, userAuthentications);
 };
 
