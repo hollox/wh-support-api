@@ -176,6 +176,31 @@ exports.up = async function(db) {
   userGroups.insert(db, constants.manager_group_id, constants.manager1_user_id);
 
   await dbUtils.createTable(db, userAuthentications);
+
+  userAuthentications.insert(
+    db,
+    constants.customer1_user_id,
+    "auth0|5ebb3139dc1d2b0c033355fe",
+    constants.auth0_authenticator_id
+  );
+  userAuthentications.insert(
+    db,
+    constants.customer2_user_id,
+    "auth0|5ebe419ca361c20c74a951fa",
+    constants.auth0_authenticator_id
+  );
+  userAuthentications.insert(
+    db,
+    constants.employee1_user_id,
+    "auth0|5ebb314f62bd5e0c701ac502",
+    constants.auth0_authenticator_id
+  );
+  userAuthentications.insert(
+    db,
+    constants.manager1_user_id,
+    "auth0|5ebb3165dc1d2b0c033356bf",
+    constants.auth0_authenticator_id
+  );
 };
 
 exports.down = function(db, callback) {
