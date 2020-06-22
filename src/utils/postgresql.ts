@@ -23,16 +23,11 @@ export async function executeQueryInTransaction<T>(
   try {
     await client.query("BEGIN");
 
-    const result = await inTransactionCallback((queryConfig: QueryConfig) =>
-      client.query(queryConfig)
-    );
+    const result = await inTransactionCallback((queryConfig: QueryConfig) => client.query(queryConfig));
     await client.query("COMMIT");
     return result;
   } catch (error) {
-    logger.error(
-      "There was an error when trying to execute an SQL statement",
-      error
-    );
+    logger.error("There was an error when trying to execute an SQL statement", error);
     await client.query("ROLLBACK");
     throw error;
   } finally {
